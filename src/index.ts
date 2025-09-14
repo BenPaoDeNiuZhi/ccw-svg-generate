@@ -56,7 +56,7 @@ export default {
 	async fetch(req, env, ctx) {
 		const url = new URL(req.url);
 		const dat = await generate(
-			url.searchParams.get('template') || '未传入数据',
+			url.searchParams.get('template') || url.searchParams.get('t') || '未传入数据',
 			JSON.parse(url.searchParams.get('params') || url.searchParams.get('param') || '[]'),
 			req
 		);
