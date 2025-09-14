@@ -44,7 +44,7 @@ async function generate(
 	req: { headers: Headers }
 ): Promise<string> {
 	let dat = pattern;
-	console.log(params);
+	console.log(JSON.stringify(params));
 	const ip = req.headers.get('x-real-ip') || 'unknown';
 	const uaRaw = req.headers.get('user-agent') || 'unknown'
 	const ua = UAParser(uaRaw);
