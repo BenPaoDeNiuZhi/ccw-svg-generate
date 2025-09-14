@@ -32,15 +32,15 @@ async function generate(
 				case 'ua':
 					param = uaRaw;
 					break;
-        case 'ua.device.modal': //型号
-          param = ua.device.model || 'unknown'
-          break
-        case 'ua.device.type': //类型
-          param = ua.device.type || 'unknown'
-          break
-        case 'ua.device.vendor': //厂商
-          param = ua.device.vendor || 'unknown'
-          break
+				case 'ua.device.modal': //型号
+					param = ua.device.model || 'unknown'
+					break
+				case 'ua.device.type': //类型
+					param = ua.device.type || 'unknown'
+					break
+				case 'ua.device.vendor': //厂商
+					param = ua.device.vendor || 'unknown'
+					break
 				default:
 					param = '%%s';
 			}
