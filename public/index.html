@@ -93,10 +93,10 @@
                         const container = document.createElement('foreignObject')
                         container.setAttribute('x',0)
                         container.setAttribute('y',0)
-						container.setAttribute('width',100%)
+						container.setAttribute('width','100%')
 						container.setAttribute('xmlns',"http://www.w3.org/1999/xhtml")
                         const text = document.createElement('div')
-                        text.setAttribute('color','white')
+                        text.setAttribute('font-color','white')
                         text.innerText = 'ua:%s'
                         container.appendChild(text)
                         svg.appendChild(rect)
