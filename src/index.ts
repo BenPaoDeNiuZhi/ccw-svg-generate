@@ -8,6 +8,34 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 import {UAParser} from "ua-parser-js";
+
+function parseExpression(token,ctx){
+	if (token.hasOwnProperty('type')) {
+		param = JSON.stringify(token);
+	} else {
+		switch (token) {
+			case 'ip':
+				param = ctx.ip;
+				break;
+			case 'ua':
+				param = ctx.uaRaw;
+				break;
+			case 'ua.device.modal': //型号
+				param = ctx.ua.device.model || 'unknown'
+				break
+			case 'ua.device.type': //类型
+				param = ctx.ua.device.type || 'unknown'
+				break
+			case 'ua.device.vendor': //厂商
+				param = ctx.ua.device.vendor || 'unknown'
+				break
+			default:
+				param = JSON.stringify(token);
+		}
+	}
+	return param
+}
+
 async function generate(
 	pattern: string,
 	params: [string | { type: string; hasOwnProperty: () => boolean }],
@@ -16,35 +44,16 @@ async function generate(
 	let dat = pattern;
 	console.log(params);
 	const ip = req.headers.get('x-real-ip') || 'unknown';
-  const uaRaw = req.headers.get('user-agent') || 'unknown'
+	const uaRaw = req.headers.get('user-agent') || 'unknown'
 	const ua = UAParser(uaRaw);
 
 	for (let i of params) {
 		console.log(i);
-		let param: string;
-		if (i.hasOwnProperty('type')) {
-			param = JSON.stringify(i);
-		} else {
-			switch (i) {
-				case 'ip':
-					param = ip;
-					break;
-				case 'ua':
-					param = uaRaw;
-					break;
-				case 'ua.device.modal': //型号
-					param = ua.device.model || 'unknown'
-					break
-				case 'ua.device.type': //类型
-					param = ua.device.type || 'unknown'
-					break
-				case 'ua.device.vendor': //厂商
-					param = ua.device.vendor || 'unknown'
-					break
-				default:
-					param = '%%s';
-			}
-		}
+		let param: string=parseExpression(i,{
+			ip:ip,
+			ua:ua,
+			uaRaw:uaRaw
+		});
 		dat = dat.replace(/(?<!%)%s/, param);
 	}
 	dat = dat.replaceAll('%%', '%');
