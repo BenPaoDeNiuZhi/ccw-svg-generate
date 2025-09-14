@@ -73,7 +73,7 @@ export default {
 		catch(e){
 			return new Response("解析参数与模板时出错"+e.toString(), {
 				headers: {
-					'Content-type': 'text/plain',
+					'Content-type': 'text/plain; charset=utf-8',
 				},
 				code:500
 			});
@@ -87,7 +87,7 @@ export default {
 		);
 		return new Response(dat, {
 			headers: {
-				'Content-type': url.searchParams.get('type') || 'image/svg+xml',
+				'Content-type': url.searchParams.get('type') || 'image/svg+xml; charset=utf-8',
 			},
 		});
 	},
