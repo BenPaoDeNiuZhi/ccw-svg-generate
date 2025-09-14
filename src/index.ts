@@ -7,7 +7,7 @@
  *
  * Learn more at https://developers.cloudflare.com/workers/
  */
-
+import {UAParser} from "ua-parser-js";
 async function generate(
 	pattern: string,
 	params: [string | { type: string; hasOwnProperty: () => boolean }],
@@ -16,7 +16,8 @@ async function generate(
 	let dat = pattern;
 	console.log(params);
 	const ip = req.headers.get('x-real-ip') || 'unknown';
-	const ua = req.headers.get('user-agent') || 'unknown';
+  const uaRaw = req.headers.get('user-agent') || 'unknown'
+	const ua = UAParser(uaRaw);
 
 	for (let i of params) {
 		console.log(i);
@@ -29,8 +30,17 @@ async function generate(
 					param = ip;
 					break;
 				case 'ua':
-					param = ua;
+					param = uaRaw;
 					break;
+        case 'ua.device.modal': //型号
+          param = ua.device.model || 'unknown'
+          break
+        case 'ua.device.type': //类型
+          param = ua.device.type || 'unknown'
+          break
+        case 'ua.device.vendor': //厂商
+          param = ua.device.vendor || 'unknown'
+          break
 				default:
 					param = '%%s';
 			}
