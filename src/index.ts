@@ -84,7 +84,7 @@ export default {
 				headers: {
 					'Content-type': 'text/plain; charset=utf-8',
 				},
-				code:500
+				status:500
 			});
 		}finally{
 			
