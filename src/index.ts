@@ -11,6 +11,7 @@ import {UAParser} from "ua-parser-js";
 
 function parseExpression(token,ctx){
 	let param:string;
+	console.log(JSON.stringify(token))
 	if (token.hasOwnProperty('type')) {
 		param = JSON.stringify(token);
 	} else {
@@ -49,7 +50,6 @@ async function generate(
 	const ua = UAParser(uaRaw);
 
 	for (let i of params) {
-		console.log(i);
 		let param: string=parseExpression(i,{
 			ip:ip,
 			ua:ua,
@@ -66,7 +66,7 @@ export default {
 	async fetch(req, env, ctx) {
 		const url = new URL(req.url);
 		let template:string, params:Array;
-		try{
+		try{l.
 			template=url.searchParams.get('template') || url.searchParams.get('t') || '未传入数据'
 			params=JSON.parse(url.searchParams.get('params') || url.searchParams.get('param') || '[]')
 		}
