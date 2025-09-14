@@ -90,9 +90,10 @@
                         rect.setAttribute('width','100%')
                         rect.setAttribute('height',80)
                         rect.setAttribute('fill','blue')
-                        const container = document.createElement('foreignobject')
+                        const container = document.createElement('foreignObject')
                         container.setAttribute('x','50%')
                         container.setAttribute('y',50)
+						container.setAttribute('xmlns',"http://www.w3.org/1999/xhtml")
                         const text = document.createElement('div')
                         text.setAttribute('color','white')
                         text.innerText = 'ua:%s'
