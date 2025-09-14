@@ -10,6 +10,7 @@
 import {UAParser} from "ua-parser-js";
 
 function parseExpression(token,ctx){
+	let param:string;
 	if (token.hasOwnProperty('type')) {
 		param = JSON.stringify(token);
 	} else {
