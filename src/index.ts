@@ -13,6 +13,15 @@ function parseExpression(token,ctx){
 	let param:string;
 	console.log(JSON.stringify(token))
 	if (token.hasOwnProperty('type')) {
+		switch(token.type){
+			case 'concat':// type:concat params:["hello","ua"]
+				const funcParams = token?.params || []
+				let ret=""
+				for(let dat of funcParams){
+					ret+=parseExpression(dat,ctx)
+				}
+				return ret
+		}
 		param = JSON.stringify(token);
 	} else {
 		switch (token) {
@@ -32,7 +41,7 @@ function parseExpression(token,ctx){
 				param = ctx.ua.device.vendor || 'unknown'
 				break
 			default:
-				param = JSON.stringify(token);
+				param = token.toString();
 		}
 	}
 	return param
