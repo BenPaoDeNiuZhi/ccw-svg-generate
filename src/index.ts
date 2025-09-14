@@ -70,13 +70,15 @@ export default {
 			template=url.searchParams.get('template') || url.searchParams.get('t') || '未传入数据'
 			params=JSON.parse(url.searchParams.get('params') || url.searchParams.get('param') || '[]')}
 		}
-		catch{
-			return new Response("解析参数与模板时出错", {
+		catch(e){
+			return new Response("解析参数与模板时出错"+e.toString(), {
 				headers: {
 					'Content-type': 'text/plain',
 				},
 				code:500
 			});
+		}finally{
+			
 		}
 		const dat = await generate(
 			template,
