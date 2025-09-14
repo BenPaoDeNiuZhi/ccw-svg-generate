@@ -9,7 +9,13 @@
 	"compatibility_date": "2025-09-13",
 	"observability": {
 		"enabled": true
-	}
+	},
+	"routes": [
+		{
+			"pattern": "ccw-svg.kivotos.qzz.io/*",
+			"zone_name": "kivotos.qzz.io"
+		}
+	]
 	/**
 	 * Smart Placement
 	 * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
