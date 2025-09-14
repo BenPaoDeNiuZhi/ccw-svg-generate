@@ -68,7 +68,7 @@ export default {
 		let template:string, params:Array;
 		try{
 			template=url.searchParams.get('template') || url.searchParams.get('t') || '未传入数据'
-			params=JSON.parse(url.searchParams.get('params') || url.searchParams.get('param') || '[]')}
+			params=JSON.parse(url.searchParams.get('params') || url.searchParams.get('param') || '[]')
 		}
 		catch(e){
 			return new Response("解析参数与模板时出错"+e.toString(), {
