@@ -7,20 +7,20 @@
  *
  * Learn more at https://developers.cloudflare.com/workers/
  */
-import {UAParser} from "ua-parser-js";
+import { UAParser } from 'ua-parser-js';
 
-function parseExpression(token,ctx){
-	let param:string;
-	console.log(JSON.stringify(token))
+function parseExpression(token, ctx) {
+	let param: string;
+	console.log(JSON.stringify(token));
 	if (token.hasOwnProperty('type')) {
-		switch(token.type){
-			case 'concat':// type:concat params:["hello","ua"]
-				const funcParams = token?.params || []
-				let ret=""
-				for(let dat of funcParams){
-					ret+=parseExpression(dat,ctx)
+		switch (token.type) {
+			case 'concat': // type:concat params:["hello","ua"]
+				const funcParams = token?.params || [];
+				let ret = '';
+				for (let dat of funcParams) {
+					ret += parseExpression(dat, ctx);
 				}
-				return ret
+				return ret;
 		}
 		param = JSON.stringify(token);
 	} else {
@@ -32,22 +32,22 @@ function parseExpression(token,ctx){
 				param = ctx.uaRaw;
 				break;
 			case 'ua.device.modal': //型号
-				param = ctx.ua.device.model || 'unknown'
-				break
+				param = ctx.ua.device.model || 'unknown';
+				break;
 			case 'ua.device.type': //类型
-				param = ctx.ua.device.type || 'unknown'
-				break
+				param = ctx.ua.device.type || 'unknown';
+				break;
 			case 'ua.device.vendor': //厂商
-				param = ctx.ua.device.vendor || 'unknown'
-				break
+				param = ctx.ua.device.vendor || 'unknown';
+				break;
 			default:
 				param = token.toString();
 		}
 	}
-	return param
+	return param;
 }
 
-async function generate(
+async function generateV1(
 	pattern: string,
 	params: [string | { type: string; hasOwnProperty: () => boolean }],
 	req: { headers: Headers }
@@ -55,14 +55,14 @@ async function generate(
 	let dat = pattern;
 	console.log(JSON.stringify(params));
 	const ip = req.headers.get('x-real-ip') || 'unknown';
-	const uaRaw = req.headers.get('user-agent') || 'unknown'
+	const uaRaw = req.headers.get('user-agent') || 'unknown';
 	const ua = UAParser(uaRaw);
 
 	for (let i of params) {
-		let param: string=parseExpression(i,{
-			ip:ip,
-			ua:ua,
-			uaRaw:uaRaw
+		let param: string = parseExpression(i, {
+			ip: ip,
+			ua: ua,
+			uaRaw: uaRaw,
 		});
 		dat = dat.replace(/(?<!%)%s/, param);
 	}
@@ -74,30 +74,26 @@ async function generate(
 export default {
 	async fetch(req, env, ctx) {
 		const url = new URL(req.url);
-		let template:string, params:Array;
-		try{
-			template=url.searchParams.get('template') || url.searchParams.get('t') || '未传入数据'
-			params=JSON.parse(url.searchParams.get('params') || url.searchParams.get('param') || '[]')
-		}
-		catch(e){
-			return new Response("解析参数与模板时出错"+e.toString(), {
+		if(url.pathname.endsWith('v1')){
+			let template: string, params;
+			try {
+				template = url.searchParams.get('template') || url.searchParams.get('t') || '未传入数据';
+				params = JSON.parse(url.searchParams.get('params') || url.searchParams.get('param') || '[]');
+			} catch (e) {
+				return new Response('解析参数与模板时出错' + e.toString(), {
+					headers: {
+						'Content-type': 'text/plain; charset=utf-8',
+					},
+					status: 500,
+				});
+			} finally {
+			}
+			const dat = await generateV1(template, params, req);
+			return new Response(dat, {
 				headers: {
-					'Content-type': 'text/plain; charset=utf-8',
+					'Content-type': url.searchParams.get('type') || 'image/svg+xml; charset=utf-8',
 				},
-				status:500
 			});
-		}finally{
-			
 		}
-		const dat = await generate(
-			template,
-			params,
-			req
-		);
-		return new Response(dat, {
-			headers: {
-				'Content-type': url.searchParams.get('type') || 'image/svg+xml; charset=utf-8',
-			},
-		});
 	},
 };

@@ -6,8 +6,8 @@
 </head>
 
 <body>
-    <h3>基于cf制作,可以根据请求参数来生成svg或其他格式的图片及文件</h1>
-        <h2>使用方法:</h2>
+    <h1>基于cf制作,可以根据请求参数来生成svg或其他格式的图片及文件</h1>
+        <h2>v1 api 使用方法:当路径以v1结尾时,使用v1 api</h2>
         <ol id="container">
             <!-- <li><a href=""><img src="//a?template=" /></a></li> -->
         </ol>
@@ -15,7 +15,7 @@
             //http://www.w3.org/2000/svg
             items = [
                 {
-                    text: "基础:返回一个svg图片:", src:`a?template=${(()=>{
+                    text: "基础:返回一个svg图片:", src:`a/v1?template=${(()=>{
                         const svg = document.createElement("svg")
                         svg.setAttribute('width',100)
                         svg.setAttribute('height',100)
@@ -31,7 +31,7 @@
                     })()}`.replaceAll('\n', '').replaceAll('  ',' ')
                 },
                 {
-                    text: "可以使用%s作为占位符,根据params填充,比如根据ip返回一个svg图片:", src:`a?template=${(()=>{
+                    text: "可以使用%s作为占位符,根据params填充,比如根据ip返回一个svg图片:", src:`b/v1?template=${(()=>{
                         const svg = document.createElement("svg")
                         svg.setAttribute('width',100)
                         svg.setAttribute('height',100)
@@ -55,7 +55,7 @@
                     })()}&params=["ip"]`.replaceAll('\n', '').replaceAll('  ',' ')
                 },
                 {
-                    text: "可以使用%%s作为转译符,比如这个svg图片:", src:`a?template=${(()=>{
+                    text: "可以使用%%s作为转译符,比如这个svg图片:", src:`a/v1?template=${(()=>{
                         const svg = document.createElement("svg")
                         svg.setAttribute('width',100)
                         svg.setAttribute('height',100)
@@ -79,7 +79,7 @@
                     })()}&params=["ip"]`.replaceAll('\n', '').replaceAll('  ',' ')
                 },
                 {
-                    text: "返回原始ua(由于ua太长,svg默认不支持换行,所以使用foreignObject):", src:`a?template=${(()=>{
+                    text: "返回原始ua(由于ua太长,svg默认不支持换行,所以使用foreignObject):", src:`a/v1?template=${(()=>{
                         const svg = document.createElement("svg")
                         svg.setAttribute('width',400)
                         svg.setAttribute('height',100)
