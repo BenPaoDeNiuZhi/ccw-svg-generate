@@ -35,6 +35,9 @@ export function tokenize(script:string){
     if(trimScript.includes('(') && trimScript.endsWith(')')){// aaa(...)
         const funcName:string = trimScript.match(/.+(?=\()/)?.[0] || ''
         const argExps = (trimScript.match(/(?<=\S\().+(?=\))/)?.[0] || '').split(',')
+        if(argExps.length==1 && argExp[0].trim().length==0){
+            return new token_function(funcName,[])
+        }
         const argTokens = argExps.map((e)=>{
             return tokenize(e)
         })
