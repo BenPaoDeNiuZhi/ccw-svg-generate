@@ -57,6 +57,7 @@ export function tokenize(script:string){
     }else if(/^\d*\.?\d+$/.test(trimScript)){
         const data:number = parseFloat(trimScript.match(/^\d*\.?\d+$/)?.[0]) || 0
         return new token_number(data)
+    }else{
+        return new token_keyword(trimScript)
     }
-    console.warn(trimScript)
 }
