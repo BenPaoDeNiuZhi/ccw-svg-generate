@@ -35,8 +35,8 @@ export function tokenize(script:string){
     if(trimScript.includes('(') && trimScript.endsWith(')')){// aaa(...)
         const funcName:string = trimScript.match(/.+(?=\()/)?.[0] || ''
         return new token_function(funcName,(trimScript.match(/(?<=\S\().+(?=\))/)?.[0] || '').split(','))
-    }else if((trimScript.startWith('\"') && trimScript.endsWith('\"')) || 
-            (trimScript.startWith('\'') && trimScript.endsWith('\''))){
+    }else if((trimScript.startsWith('\"') && trimScript.endsWith('\"')) || 
+            (trimScript.startsWith('\'') && trimScript.endsWith('\''))){
         const data:string = trimScript.match(/(?<=['"]).*(?=['"])/)?.[0] || ''
         return new token_string(data)
     }
