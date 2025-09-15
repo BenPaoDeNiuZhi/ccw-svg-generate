@@ -6,11 +6,11 @@ describe('tokenize',()=>{
         console.log(res)
         expect(res).toMatchObject({type:'func',funcName:'a',args:[]})
     })
-    it('tokenize a function with args: \"a(\"a\",1, 1.5)\"',()=>{
-        const res = tokenize('a(\"a\",1)')
+    it('tokenize a function with args: \"b(\"a)\",1,   1.5 )\"',()=>{
+        const res = tokenize('b(\"a)\",1,   1.5 )')
         console.log(res)
-        expect(res).toMatchObject({type:'func',funcName:'a'})
-        expect(res.args[0].dat).toBe('a')
+        expect(res).toMatchObject({type:'func',funcName:'b'})
+        expect(res.args[0].dat).toBe('a)')
         expect(res.args[1].dat).toBe(1)
         expect(res.args[2].dat).toBe(1.5)
     })
