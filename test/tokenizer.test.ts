@@ -7,7 +7,7 @@ describe('tokenize',()=>{
         expect(res).toMatchObject({type:'func',funcName:'a',args:[]})
     })
     it('tokenize a function with args: \"a(\"a\",1)\"',()=>{
-        const res = tokenize('a(\"a\",\"b\")')
+        const res = tokenize('a(\"a\",1)')
         console.log(res)
         expect(res).toMatchObject({type:'func',funcName:'a'})
         expect(res.args[0].dat).toBe('a')
