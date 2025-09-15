@@ -11,4 +11,9 @@ describe('tokenize',()=>{
         console.log(res)
         expect(res).toMatchObject({type:'func',funcName:'a',args:['\"a\"','\"b\"']})
     })
+    it('tokenize a string: \"a\"',()=>{
+        const res = tokenize('\"a\"')
+        console.log(res)
+        expect(res).toMatchObject({type:'string',dat:'a'})
+    })
 })
