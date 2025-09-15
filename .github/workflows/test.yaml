@@ -14,5 +14,5 @@ jobs:
           ls ${{ github.workspace }}
           npm ci
           npm install vitest
-          vitest
+          npm run test
       - run: echo "🍏 This job's status is ${{ job.status }}."
