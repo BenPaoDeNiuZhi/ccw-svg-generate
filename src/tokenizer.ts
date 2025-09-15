@@ -34,7 +34,11 @@ export function tokenize(script:string){
     const trimScript:string = script.trim()
     if(trimScript.includes('(') && trimScript.endsWith(')')){// aaa(...)
         const funcName:string = trimScript.match(/.+(?=\()/)?.[0] || ''
-        return new token_function(funcName,(trimScript.match(/(?<=\S\().+(?=\))/)?.[0] || '').split(','))
+        const argExps = (trimScript.match(/(?<=\S\().+(?=\))/)?.[0] || '').split(',')
+        const argTokens = argExps.map((e)=>{
+            return tokenize(e)
+        })
+        return new token_function(funcName,argTokens)
     }else if((trimScript.startsWith('\"') && trimScript.endsWith('\"')) || 
             (trimScript.startsWith('\'') && trimScript.endsWith('\''))){
         const data:string = trimScript.match(/(?<=['"]).*(?=['"])/)?.[0] || ''
