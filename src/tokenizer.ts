@@ -30,12 +30,20 @@ class token_string extends token{
     }
 }
 
+class token_number extends token{
+    public dat:number
+    constructor(dat:number){
+        super('number')
+        this.dat = dat
+    }
+}
+
 export function tokenize(script:string){
     const trimScript:string = script.trim()
     if(trimScript.includes('(') && trimScript.endsWith(')')){// aaa(...)
         const funcName:string = trimScript.match(/.+(?=\()/)?.[0] || ''
         const argExps = (trimScript.match(/(?<=\S\().+(?=\))/)?.[0] || '').split(',')
-        if(argExps.length==1 && argExp[0].trim().length==0){
+        if(argExps.length==1 && argExps[0].trim().length==0){
             return new token_function(funcName,[])
         }
         const argTokens = argExps.map((e)=>{
@@ -46,5 +54,8 @@ export function tokenize(script:string){
             (trimScript.startsWith('\'') && trimScript.endsWith('\''))){
         const data:string = trimScript.match(/(?<=['"]).*(?=['"])/)?.[0] || ''
         return new token_string(data)
+    }else if(/^\d*\.?\d+$/.test(trimScript)){
+        const data:number = parseFloat(trimScript.match(/^\d*\.?\d+$/)?.[0]) || 0
+        return new token_number(data)
     }
 }
