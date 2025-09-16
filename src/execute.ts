@@ -4,6 +4,7 @@ export function exec(current_token: tokenType, ctx:any) {
     if(current_token instanceof token_function){
         current_token as token_function
         switch(current_token.funcName){
+            case 'cct':
             case 'concat':
                 let ret=''
                 for(let argToken of current_token.args){
