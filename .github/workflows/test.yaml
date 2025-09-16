@@ -1,5 +1,5 @@
 name: 单元测试
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+run-name: ${{ github.actor }} 进行了提交，进行测试 🚀
 on: [push]
 jobs:
   Explore-GitHub-Actions:
@@ -13,4 +13,3 @@ jobs:
           npm ci
           npm install vitest
           npm run test
-      - run: echo "🍏 This job's status is ${{ job.status }}."
