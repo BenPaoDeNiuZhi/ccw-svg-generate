@@ -2,7 +2,7 @@ name: 单元测试
 run-name: ${{ github.actor }} 进行了提交，进行测试 🚀
 on: [push]
 jobs:
-  进行vitest:
+  Run-Vitest:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
