@@ -1,3 +1,5 @@
+export type tokenType = token|token_function|token_keyword|token_number|token_string
+
 export class token{
     public type:string;
     constructor(type:string){
