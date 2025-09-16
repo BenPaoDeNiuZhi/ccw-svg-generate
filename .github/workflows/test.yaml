@@ -1,6 +1,8 @@
 name: 单元测试
 run-name: ${{ github.actor }} 进行了提交，进行测试 🚀
 on: [push]
+permissions:
+  contents: write
 jobs:
   Test-And-Format:
     runs-on: ubuntu-latest
