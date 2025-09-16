@@ -2,7 +2,7 @@ name: 单元测试
 run-name: ${{ github.actor }} 进行了提交，进行测试 🚀
 on: [push]
 jobs:
-  Run-Vitest:
+  Test-And-Format:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
@@ -12,4 +12,6 @@ jobs:
           ls ${{ github.workspace }}
           npm ci
           npm install vitest
+          npm install prettier
           npm run test
+          npx prettier --write "src/**/*.ts"
