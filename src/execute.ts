@@ -12,6 +12,19 @@ export function exec(current_token: tokenType, ctx:any) {
                     ret += (exec(argToken,ctx))
                 }
                 return ret
+            case '?':
+            case 'if-else':
+            case 'if'://if(statement,value when true,value when false)
+                if(current_token.args.length < 2){
+                    throw new Error('arg num less than 2',
+                        JSON.stringify(current_token.args)
+                    )
+                }
+                let statement = current_token.args[0]
+                if(exec(statement)=='true'){
+                    return current_token.args[1]
+                }
+                return current_token.args[2] || ""
         }
     }else if(current_token instanceof token_string){
         current_token as token_string
