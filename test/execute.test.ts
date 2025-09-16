@@ -1,5 +1,5 @@
 import { exec } from "../src/execute";
-import { token_string, token_keyword} from "../src/tokenizer";
+import { token_string, token_keyword, token_function} from "../src/tokenizer";
 import { describe, it, expect } from 'vitest';
 it('execute a string: \"abcd\"',()=>{
     expect(exec(new token_string('abcd'),{})).toBe('abcd')
@@ -10,6 +10,6 @@ it('execute a keyword: ip',()=>{
 it('execute an undefined keyword: xxx',()=>{
     expect(exec(new token_keyword('xxx'),{ip:'127.0.0.1'})).toBe('undefined')
 })
-it('execute concat: concat()',()=>{
-    expect(exec(new token_keyword('xxx'),{ip:'127.0.0.1'})).toBe('undefined')
+it('execute concat: concat(ip,\" hello")',()=>{
+    expect(exec(new token_function('concat',[new token_keyword("ip"),new token_string(" hello")]),{ip:'127.0.0.1'})).toBe('127.0.0.1 hello')
 })
