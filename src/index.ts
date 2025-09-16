@@ -9,7 +9,7 @@
  */
 import { UAParser } from 'ua-parser-js';
 
-function parseExpression(token, ctx) {
+function parseExpression(token:any, ctx:any) {
 	let param: string;
 	console.log(JSON.stringify(token));
 	if (token.hasOwnProperty('type')) {
@@ -72,14 +72,14 @@ async function generateV1(
 }
 
 export default {
-	async fetch(req, env, ctx) {
+	async fetch(req:any, env:any, ctx:any) {
 		const url = new URL(req.url);
 		if(url.pathname.endsWith('v1')){
 			let template: string, params;
 			try {
 				template = url.searchParams.get('template') || url.searchParams.get('t') || '未传入数据';
 				params = JSON.parse(url.searchParams.get('params') || url.searchParams.get('param') || '[]');
-			} catch (e) {
+			} catch (e: any) {
 				return new Response('解析参数与模板时出错' + e.toString(), {
 					headers: {
 						'Content-type': 'text/plain; charset=utf-8',
