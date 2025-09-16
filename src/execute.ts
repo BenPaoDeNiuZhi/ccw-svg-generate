@@ -22,9 +22,12 @@ export function exec(current_token: tokenType, ctx:any) {
                 }
                 let statement = current_token.args[0]
                 if(exec(statement)=='true'){
-                    return current_token.args[1]
+                    return exec(current_token.args[1])
                 }
-                return current_token.args[2] || ""
+                if(current_token.args[2]){
+                    return exec(current_token.args[2])
+                }
+                return ""
         }
     }else if(current_token instanceof token_string){
         current_token as token_string
