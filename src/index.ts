@@ -32,7 +32,7 @@ function parseExpression(token:any, ctx:any) {
             case 'ua':
                 param = ctx.uaRaw;
                 break;
-            case 'ua.device.modal': //型号
+            case 'ua.device.model': //型号
                 param = ctx.ua.device.model || 'unknown';
                 break;
             case 'ua.device.type': //类型
@@ -100,14 +100,20 @@ async function generateContext(req){
         uaRaw:uaRaw,
         "ua":uaRaw,
         uaObj:uaObj,
-        "ua.device.modal":uaObj.device.modal || "unknown",
+        "ua.browser.name":uaObj.browser.name || "unknown",
+        "ua.browser.version":uaObj.browser.version || "unknown",
+        "ua.device.model":uaObj.device.modal || "unknown",
         "ua.device.type":uaObj.device.type || "unknown",
         "ua.device.vendor":uaObj.device.vendor || "unknown",
         location:locationObj,
         "location.country":locationObj.country || "unknown",
+        "location.country_code":locationObj.country_code || "unknown",
         "location.prov":locationObj.prov || "unknown",
         "location.city":locationObj.city || "unknown",
+        "location.city_code":locationObj.city_code || "unknown",
+        "location.city_short_code":locationObj.city_short_code || "unknown",
         "location.area":locationObj.area || "unknown",
+        "location.isp":locationObj.isp || "unknown",
     }
 }
 
