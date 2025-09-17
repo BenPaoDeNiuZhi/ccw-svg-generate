@@ -14,6 +14,8 @@ it("run if-else ?(true,\"t\",0)",()=>{
     expect(exec(t,{})).toEqual("t")
     t = tokenize("?(false,\"t\",0)")
     expect(exec(t,{})).toEqual(0)
+    t = tokenize("?(false,\"t\")")
+    expect(exec(t,{})).toEqual(undefined)
 })
 it("run concat cct(\"a\",\"b\", \"c\")",()=>{
     const t = tokenize("cct(\"a\",\"b\", \"c\")")
