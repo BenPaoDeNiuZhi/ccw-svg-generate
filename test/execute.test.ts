@@ -8,7 +8,7 @@ it('execute a keyword: ip',()=>{
     expect(exec(new token_keyword('ip'),{ip:'127.0.0.1'})).toBe('127.0.0.1')
 })
 it('execute an undefined keyword: xxx',()=>{
-    expect(exec(new token_keyword('xxx'),{ip:'127.0.0.1'})).toBe('undefined')
+    expect(exec(new token_keyword('xxx'),{ip:'127.0.0.1'})).toBe(undefined)
 })
 it('execute concat: concat(ip,\" hello\")',()=>{
     expect(exec(new token_function('concat',[
