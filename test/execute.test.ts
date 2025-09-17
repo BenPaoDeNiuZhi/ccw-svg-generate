@@ -7,16 +7,16 @@ it('execute a string: \"abcd\"',async ()=>{
 it('execute a keyword: ip',async ()=>{
     expect(await exec(new token_keyword('ip'),{ip:'127.0.0.1'})).toBe('127.0.0.1')
 })
-it('execute an undefined keyword: xxx',()=>{
+it('execute an undefined keyword: xxx',async ()=>{
     expect(await exec(new token_keyword('xxx'),{ip:'127.0.0.1'})).toBe(undefined)
 })
-it('execute concat: concat(ip,\" hello\")',()=>{
+it('execute concat: concat(ip,\" hello\")',async ()=>{
     expect(await exec(new token_function('concat',[
         new token_keyword("ip"),
         new token_string(" hello")
     ]),{ip:'127.0.0.1'})).toBe('127.0.0.1 hello')
 })
-it('execute if(else): ?(true,"1","2")',()=>{
+it('execute if(else): ?(true,"1","2")',async ()=>{
     expect(await exec(new token_function('?',[
         new token_string("true"),
         new token_string("1"),
