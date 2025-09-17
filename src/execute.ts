@@ -33,7 +33,7 @@ export async function exec(current_token: tokenType, ctx:any) {
                     )
                 }
                 let statement = current_token.args[0]
-                if(exec(statement)){
+                if(await exec(statement)){
                     return await exec(current_token.args[1])
                 }
                 else{
