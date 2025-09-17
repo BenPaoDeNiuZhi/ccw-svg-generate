@@ -16,7 +16,7 @@ it('execute concat: concat(ip,\" hello\")',()=>{
         new token_string(" hello")
     ]),{ip:'127.0.0.1'})).toBe('127.0.0.1 hello')
 })
-it('execute if(else): ?("true","1","2")',()=>{
+it('execute if(else): ?(true,"1","2")',()=>{
     expect(exec(new token_function('?',[
         new token_string("true"),
         new token_string("1"),
