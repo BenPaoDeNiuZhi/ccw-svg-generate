@@ -4,10 +4,16 @@ export function exec(current_token: tokenType, ctx:any) {
     if(current_token instanceof token_function){
         current_token as token_function
         switch(current_token.funcName){
-            case '=':
+            case 'equ':
+            case '==':
                 if(current_token.args.length < 2){
                     throw new Error('arg num less than 2',
                         JSON.stringify(current_token.args))
+                }
+                if(current_token.args[0]==current_token.args[1]){
+                    return "true"
+                }else{
+                    return "false"
                 }
                 break;
             case 'cct':
