@@ -1,6 +1,6 @@
 import {tokenType,token_function,token_keyword,token_number,token_string} from './tokenizer';
 
-export function exec(current_token: tokenType, ctx:any) {
+export async function exec(current_token: tokenType, ctx:any) {
     if(current_token instanceof token_function){
         current_token as token_function
         switch(current_token.funcName){
@@ -10,7 +10,7 @@ export function exec(current_token: tokenType, ctx:any) {
                     throw new Error('arg num less than 2',
                         JSON.stringify(current_token.args))
                 }
-                if(exec(current_token.args[0])==exec(current_token.args[1])){
+                if(await exec(current_token.args[0])==await exec(current_token.args[1])){
                     return true
                 }else{
                     return false
@@ -21,7 +21,7 @@ export function exec(current_token: tokenType, ctx:any) {
                 let ret=''
                 for(let argToken of current_token.args){
                     argToken as tokenType
-                    ret += (exec(argToken,ctx))
+                    ret += await exec(argToken,ctx)
                 }
                 return ret
             case '?':
@@ -34,10 +34,10 @@ export function exec(current_token: tokenType, ctx:any) {
                 }
                 let statement = current_token.args[0]
                 if(exec(statement)){
-                    return exec(current_token.args[1])
+                    return await exec(current_token.args[1])
                 }
                 else{
-                    return exec(current_token.args[2])
+                    return await exec(current_token.args[2])
                 }
         }
     }else if(current_token instanceof token_string){
