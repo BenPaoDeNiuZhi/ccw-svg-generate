@@ -10,7 +10,7 @@ export function exec(current_token: tokenType, ctx:any) {
                     throw new Error('arg num less than 2',
                         JSON.stringify(current_token.args))
                 }
-                if(current_token.args[0]==current_token.args[1]){
+                if(exec(current_token.args[0])==exec(current_token.args[1])){
                     return "true"
                 }else{
                     return "false"
