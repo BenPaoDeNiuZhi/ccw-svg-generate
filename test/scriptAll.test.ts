@@ -13,3 +13,13 @@ it("run if-else ?(\"true\",\"t\",0)",()=>{
     const t = tokenize("?(\"true\",\"t\",0)")
     expect(exec(t,{})).toEqual("t")
 })
+it("run concat cct(\"a\",\"b\", \"c\")",()=>{
+    const t = tokenize("cct(\"a\",\"b\", \"c\")")
+    expect(exec(t,{})).toEqual("abc")
+})
+it("run equal ==(\"a\",\"b\") ==(\"a\",\"a\")",()=>{
+    let t = tokenize("==(\"a\",\"b\")")
+    expect(exec(t,{})).toEqual("false")
+    let t = tokenize("==(\"a\",\"a\")")
+    expect(exec(t,{})).toEqual("true")
+})
