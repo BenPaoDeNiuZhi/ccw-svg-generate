@@ -36,10 +36,9 @@ export function exec(current_token: tokenType, ctx:any) {
                 if(exec(statement)){
                     return exec(current_token.args[1])
                 }
-                if(current_token.args[2]){
+                else{
                     return exec(current_token.args[2])
                 }
-                return ""
         }
     }else if(current_token instanceof token_string){
         current_token as token_string
