@@ -74,6 +74,43 @@ async function generateV1(
     return dat;
 }
 
+async function generateV2(template,params,req){
+    return JSON.stringify({
+        template:template,
+        params:params,
+        ctx:generateContext(req)
+    })
+}
+
+
+async function generateContext(req){
+    const ip = req.headers.get('x-real-ip') || 'unknown';
+    const uaRaw = req.headers.get('user-agent') || 'unknown';
+    const uaObj = UAParser(uaRaw);
+    let locationObj={}
+    if(ip !== "unknown"){
+        const locationRes = await fetch("https://ip9.com.cn/get?ip="+ip)
+        const lj = await locationRes.json()
+        if(lj.ret == 200){
+            locationObj = lj.data
+        }
+    }
+    return {
+        ip:ip,
+        uaRaw:uaRaw,
+        "ua":uaRaw,
+        uaObj:uaObj,
+        "ua.device.modal":uaObj.device.modal || "unknown",
+        "ua.device.type":uaObj.device.type || "unknown",
+        "ua.device.vendor":uaObj.device.vendor || "unknown",
+        location:locationObj,
+        "location.country":locationObj.country || "unknown",
+        "location.prov":locationObj.prov || "unknown",
+        "location.city":locationObj.city || "unknown",
+        "location.area":locationObj.area || "unknown",
+    }
+}
+
 export function fillParam(template,params){
     for (let param of params){
         template = template.replace(/(?<!%)%s/, param);
@@ -107,8 +144,8 @@ export default {
                 },
             });
         }else{// v2
-            const dat = JSON.stringify([template,params])
-            
+            //const dat = JSON.stringify([template,params])
+            const dat = await generateV2(template,params,req)
             return new Response(dat, {
                 headers: {
                     'Content-type': url.searchParams.get('type') || 'image/svg+xml; charset=utf-8',
