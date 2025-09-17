@@ -55,6 +55,8 @@ export async function exec(current_token: tokenType, ctx:any) {
                 return false
             case "null":
                 return null
+            case "undefined":
+                return undefined
             default:
                 return ctx?.[current_token.name] || undefined
         }
