@@ -8,30 +8,30 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 import { UAParser } from 'ua-parser-js';
-
+import { tokenize } from 'tokenizer.ts'
 function parseExpression(token:any, ctx:any) {
-	let param: string;
-	console.log(JSON.stringify(token));
-	if (token.hasOwnProperty('type')) {
-		switch (token.type) {
-			case 'concat': // type:concat params:["hello","ua"]
-				const funcParams = token?.params || [];
-				let ret = '';
-				for (let dat of funcParams) {
-					ret += parseExpression(dat, ctx);
-				}
-				return ret;
-		}
-		param = JSON.stringify(token);
-	} else {
-		switch (token) {
-			case 'ip':
-				param = ctx.ip;
-				break;
-			case 'ua':
-				param = ctx.uaRaw;
-				break;
-			case 'ua.device.modal': //型号
+    let param: string;
+    console.log(JSON.stringify(token));
+    if (token.hasOwnProperty('type')) {
+        switch (token.type) {
+            case 'concat': // type:concat params:["hello","ua"]
+                const funcParams = token?.params || [];
+                let ret = '';
+                for (let dat of funcParams) {
+                    ret += parseExpression(dat, ctx);
+                }
+                return ret;
+        }
+        param = JSON.stringify(token);
+    } else {
+       switch (token) {
+            case 'ip':
+                param = ctx.ip;
+                break;
+            case 'ua':
+                param = ctx.uaRaw;
+                break;
+            case 'ua.device.modal': //型号
 				param = ctx.ua.device.model || 'unknown';
 				break;
 			case 'ua.device.type': //类型
