@@ -78,7 +78,7 @@ async function generateV2(template,params,req){
     return JSON.stringify({
         template:template,
         params:params,
-        ctx:generateContext(req)
+        ctx:await generateContext(req)
     })
 }
 
