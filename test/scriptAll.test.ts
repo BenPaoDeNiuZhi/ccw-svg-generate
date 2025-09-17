@@ -20,6 +20,6 @@ it("run concat cct(\"a\",\"b\", \"c\")",()=>{
 it("run equal ==(\"a\",\"b\") ==(\"a\",\"a\")",()=>{
     let t = tokenize("==(\"a\",\"b\")")
     expect(exec(t,{})).toEqual("false")
-    let t = tokenize("==(\"a\",\"a\")")
+    t = tokenize("==(\"a\",\"a\")")
     expect(exec(t,{})).toEqual("true")
 })
