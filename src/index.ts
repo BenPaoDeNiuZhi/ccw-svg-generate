@@ -74,11 +74,11 @@ async function generateV1(
     return dat;
 }
 
-function fillParam(template,params){
+export function fillParam(template,params){
     for (let param of params){
         template = template.replace(/(?<!%)%s/, param);
     }
-    teplate = tempate.replaceAll('%%', '%');
+    template = template.replaceAll('%%', '%');
     return template
 }
 
