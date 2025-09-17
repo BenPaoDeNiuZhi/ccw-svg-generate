@@ -58,6 +58,7 @@ async function generateV1(
     const ip = req.headers.get('x-real-ip') || 'unknown';
     const uaRaw = req.headers.get('user-agent') || 'unknown';
     const ua = UAParser(uaRaw);
+    let strParams = []
 
     for (let i of params) {
         let param: string = parseExpression(i, {
@@ -65,11 +66,20 @@ async function generateV1(
             ua: ua,
             uaRaw: uaRaw,
         });
-        dat = dat.replace(/(?<!%)%s/, param);
+        strParams.push(param)
+        
     }
-    dat = dat.replaceAll('%%', '%');
+    dat = fillParam(dat,strParams)
     console.log(dat);
     return dat;
+}
+
+function fillParam(template,params){
+    for (let param of params){
+        template = template.replace(/(?<!%)%s/, param);
+    }
+    teplate = tempate.replaceAll('%%', '%');
+    return template
 }
 
 export default {
@@ -107,7 +117,8 @@ export default {
                     status: 500,
                 });
             } finally {}
-            const dat = JSON.stringify(template,params)
+            const dat = JSON.stringify([template,params])
+            
             return new Response(dat, {
                 headers: {
                     'Content-type': url.searchParams.get('type') || 'image/svg+xml; charset=utf-8',
