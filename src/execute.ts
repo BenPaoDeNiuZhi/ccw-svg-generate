@@ -7,8 +7,8 @@ export function exec(current_token: tokenType, ctx:any) {
             case '=':
                 if(current_token.args.length < 2){
                     throw new Error('arg num less than 2',
-                        JSON.stringify(current_token.args)
-                break
+                        JSON.stringify(current_token.args))
+                break;
             case 'cct':
             case 'concat':
                 let ret=''
