@@ -8,7 +8,8 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 import { UAParser } from 'ua-parser-js';
-import { tokenize } from 'tokenizer.ts'
+import { tokenize } from 'tokenizer.ts';
+import { exec } from 'execute.ts';
 function parseExpression(token:any, ctx:any) {
     let param: string;
     console.log(JSON.stringify(token));
@@ -86,9 +87,27 @@ export default {
                     },
                     status: 500,
                 });
-            } finally {
-            	}
+            } finally {}
             const dat = await generateV1(template, params, req);
+            return new Response(dat, {
+                headers: {
+                    'Content-type': url.searchParams.get('type') || 'image/svg+xml; charset=utf-8',
+                },
+            });
+        }else{// v2
+            let template: string, params;
+            try {
+                template = url.searchParams.get('template') || url.searchParams.get('t') || '未传入数据';
+                params = JSON.parse(url.searchParams.get('params') || url.searchParams.get('param') || '[]');
+            } catch (e: any) {
+                return new Response('解析参数与模板时出错' + e.toString(), {
+                    headers: {
+                        'Content-type': 'text/plain; charset=utf-8',
+                    },
+                    status: 500,
+                });
+            } finally {}
+            const dat = JSON.stringify(template,params)
             return new Response(dat, {
                 headers: {
                     'Content-type': url.searchParams.get('type') || 'image/svg+xml; charset=utf-8',
