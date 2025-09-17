@@ -85,19 +85,21 @@ export function fillParam(template,params){
 export default {
     async fetch(req:any, env:any, ctx:any) {
         const url = new URL(req.url);
+
+        let template: string, params;
+        try {
+            template = url.searchParams.get('template') || url.searchParams.get('t') || '未传入数据';
+            params = JSON.parse(url.searchParams.get('params') || url.searchParams.get('param') || '[]');
+        } catch (e: any) {
+            return new Response('解析参数与模板时出错' + e.toString(), {
+                headers: {
+                    'Content-type': 'text/plain; charset=utf-8',
+                },
+                status: 500,
+            });
+        } finally {}
+
         if(url.pathname.endsWith('v1')){
-            let template: string, params;
-            try {
-                template = url.searchParams.get('template') || url.searchParams.get('t') || '未传入数据';
-                params = JSON.parse(url.searchParams.get('params') || url.searchParams.get('param') || '[]');
-            } catch (e: any) {
-                return new Response('解析参数与模板时出错' + e.toString(), {
-                    headers: {
-                        'Content-type': 'text/plain; charset=utf-8',
-                    },
-                    status: 500,
-                });
-            } finally {}
             const dat = await generateV1(template, params, req);
             return new Response(dat, {
                 headers: {
@@ -105,18 +107,6 @@ export default {
                 },
             });
         }else{// v2
-            let template: string, params;
-            try {
-                template = url.searchParams.get('template') || url.searchParams.get('t') || '未传入数据';
-                params = JSON.parse(url.searchParams.get('params') || url.searchParams.get('param') || '[]');
-            } catch (e: any) {
-                return new Response('解析参数与模板时出错' + e.toString(), {
-                    headers: {
-                        'Content-type': 'text/plain; charset=utf-8',
-                    },
-                    status: 500,
-                });
-            } finally {}
             const dat = JSON.stringify([template,params])
             
             return new Response(dat, {
