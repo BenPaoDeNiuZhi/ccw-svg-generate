@@ -11,9 +11,9 @@ export function exec(current_token: tokenType, ctx:any) {
                         JSON.stringify(current_token.args))
                 }
                 if(exec(current_token.args[0])==exec(current_token.args[1])){
-                    return "true"
+                    return true
                 }else{
-                    return "false"
+                    return false
                 }
                 break;
             case 'cct':
@@ -33,7 +33,7 @@ export function exec(current_token: tokenType, ctx:any) {
                     )
                 }
                 let statement = current_token.args[0]
-                if(exec(statement)=='true'){
+                if(exec(statement)){
                     return exec(current_token.args[1])
                 }
                 if(current_token.args[2]){
@@ -49,6 +49,15 @@ export function exec(current_token: tokenType, ctx:any) {
         return current_token.dat
     }else if(current_token instanceof token_keyword){
         current_token as token_keyword
-        return ctx?.[current_token.name] || 'undefined'
+        switch (current_token.name){
+            case "true":
+                return true;
+            case "false":
+                return false
+            case "null":
+                return null
+            default:
+                return ctx?.[current_token.name] || undefined
+        }
     }
 }
