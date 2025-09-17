@@ -9,9 +9,11 @@ it("run keyword ip",()=>{
     const t = tokenize("ip")
     expect(exec(t,{ip:"127.0.0.1"})).toEqual("127.0.0.1")
 })
-it("run if-else ?(\"true\",\"t\",0)",()=>{
-    const t = tokenize("?(\"true\",\"t\",0)")
+it("run if-else ?(true,\"t\",0)",()=>{
+    let t = tokenize("?(true,\"t\",0)")
     expect(exec(t,{})).toEqual("t")
+    t = tokenize("?(false,\"t\",0)")
+    expect(exec(t,{})).toEqual(0)
 })
 it("run concat cct(\"a\",\"b\", \"c\")",()=>{
     const t = tokenize("cct(\"a\",\"b\", \"c\")")
@@ -19,7 +21,7 @@ it("run concat cct(\"a\",\"b\", \"c\")",()=>{
 })
 it("run equal ==(\"a\",\"b\") ==(\"a\",\"a\")",()=>{
     let t = tokenize("==(\"a\",\"b\")")
-    expect(exec(t,{})).toEqual("false")
+    expect(exec(t,{})).toEqual(false)
     t = tokenize("==(\"a\",\"a\")")
-    expect(exec(t,{})).toEqual("true")
+    expect(exec(t,{})).toEqual(true)
 })
