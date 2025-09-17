@@ -4,6 +4,12 @@ import { describe, it, expect } from 'vitest';
 it('execute a string: \"abcd\"',async ()=>{
     expect(await exec(new token_string('abcd'),{})).toBe('abcd')
 })
+it('execute builtin keywords: true false null undefined',async ()=>{
+    expect(await exec(new token_keyword('true'),{})).toBe(true)
+    expect(await exec(new token_keyword('false'),{})).toBe(false)
+    expect(await exec(new token_keyword('null'),{})).toBe(null)
+    expect(await exec(new token_keyword('undefined'),{})).toBe(undefined)
+})
 it('execute a keyword: ip',async ()=>{
     expect(await exec(new token_keyword('ip'),{ip:'127.0.0.1'})).toBe('127.0.0.1')
 })
